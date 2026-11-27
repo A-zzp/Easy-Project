@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>إيزي بروجكت | لوحة تحكم متجرك</title>
+<style>
+:root{--bg:#f7fbfc;--card:#fff;--ink:#0b2a35;--mute:#5b7480;--line:#e3eef0;--p:#1a9aa6;--p2:#137985;--ok:#12805c;--bad:#c0392b;--on:#fff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#081a20;--card:#0e2830;--ink:#e8f4f5;--mute:#93aeb7;--line:#1c4048;--p:#19c3c9;--p2:#19c3c9;--ok:#4ade80;--bad:#ff8a7a;--on:#06222a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#081a20;--card:#0e2830;--ink:#e8f4f5;--mute:#93aeb7;--line:#1c4048;--p:#19c3c9;--p2:#19c3c9;--ok:#4ade80;--bad:#ff8a7a;--on:#06222a;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;max-width:100%;overflow-x:hidden}
+body{background:var(--bg);color:var(--ink);font-family:"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.7}
+#app{margin:0;min-height:100vh;padding:100px 16px 30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(340px,100%),1fr));gap:14px;align-content:start}
+#app>*{margin:0;min-width:0}
+#app>h1,#app>.hero,#app>.chips,#app>.grid,#app>p,#app>.ctr,#app>button.full{grid-column:1/-1}
+.ctr{max-width:520px;width:100%;margin:0 auto!important}
+h1{font-size:1.5rem;margin:.2em 0}h2{font-size:1.15rem;margin:.2em 0 .6em}p{margin:.3em 0}
+.logo{font-weight:800;font-size:1.3rem;color:var(--p2)}.logo b{color:var(--p)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+.mute{color:var(--mute);font-size:.88rem}
+label{display:block;font-weight:600;margin:12px 0 4px}
+input,select,textarea{width:100%;font:inherit;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+button{font:inherit;font-weight:700;border:0;border-radius:12px;padding:12px 18px;background:var(--p);color:var(--on);cursor:pointer}
+button.ghost{background:transparent;color:var(--p2);border:1px solid var(--line)}
+button.full{width:100%;margin-top:14px}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.k{padding:14px;border-radius:14px;background:var(--card);border:1px solid var(--line)}
+.k b{display:block;font-size:1.3rem;direction:ltr;text-align:start}.k span{font-size:.82rem;color:var(--mute)}
+.bar{height:12px;border-radius:8px;background:var(--line);overflow:hidden;margin:4px 0 12px}.bar i{display:block;height:100%;background:var(--p)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{padding:9px 14px;border-radius:999px;border:1px solid var(--line);cursor:pointer;background:var(--card)}.chip.on{background:var(--p);color:var(--on);border-color:var(--p)}
+.ai{border-inline-start:5px solid var(--p);background:var(--card);border-radius:12px;padding:14px;margin:12px 0}
+.ai ol{margin:.4em 0;padding-inline-start:1.3em}
+.tag{display:inline-block;padding:2px 10px;border-radius:999px;background:var(--p);color:var(--on);font-size:.78rem}
+.lock{text-align:center;color:var(--mute)}
+table{width:100%;border-collapse:collapse}td,th{padding:8px;border-bottom:1px solid var(--line);text-align:start}
+.err{color:var(--bad);font-size:.9rem}
+.pc{border:2px solid var(--line)}.pc.cur{border-color:var(--p)}.price{font-size:1.8rem;font-weight:800}
+.hero{background:linear-gradient(135deg,#177a8c,#1d9aa9 60%,#4a86e8);color:#fff;border-radius:22px;padding:18px;position:relative;overflow:hidden;animation:up .5s both}
+.hero::after{content:"";position:absolute;inset-inline-end:-40px;top:-50px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.12)}
+.hero .row{position:relative;z-index:1}
+.big{font-size:2.3rem;font-weight:800;direction:ltr;text-align:start;line-height:1.2}
+.ring{flex:none;width:86px;height:86px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#fff calc(var(--v)*1%),rgba(255,255,255,.25) 0)}
+.ring span{width:66px;height:66px;border-radius:50%;background:#177a8c;display:grid;place-items:center;font-weight:800}
+.pill{position:relative;z-index:1;display:inline-block;margin-top:12px;background:rgba(255,255,255,.2);border-radius:999px;padding:4px 14px;font-weight:700}
+.em{display:inline-block;animation:bob 2.2s ease-in-out infinite}
+.tip{background:linear-gradient(135deg,rgba(25,195,201,.15),rgba(37,99,235,.13))}
+.chip{transition:transform .15s}.chip:active{transform:scale(.94)}
+.gb i{width:0;animation:gw 1s .3s forwards}
+@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes bob{50%{transform:translateY(-4px)}}
+@keyframes gw{to{width:var(--w)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.gb i{width:var(--w)}}
+.top{position:fixed;top:0;inset-inline:0;z-index:20;display:flex;align-items:center;gap:10px;padding:calc(8px + env(safe-area-inset-top,0px)) 12px 8px;background:var(--card);border-bottom:1px solid var(--line)}
+.top .mb{padding:6px 14px;font-size:1.2rem}
+#sb{position:fixed;top:0;bottom:0;inset-inline-start:0;width:250px;z-index:30;background:var(--card);border-inline-end:1px solid var(--line);padding:calc(16px + env(safe-area-inset-top,0px)) 12px 16px;display:flex;flex-direction:column;gap:6px;transform:translateX(100%);transition:transform .25s;overflow-y:auto}
+#bd{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:25;display:none}
+body.sbo #sb{transform:none}body.sbo #bd{display:block}
+.mi{display:flex;gap:10px;align-items:center;background:none;color:var(--ink);text-align:start;padding:11px 12px;border-radius:12px;width:100%;font-weight:600}
+.mi.on{background:rgba(25,195,201,.18);color:var(--p2);box-shadow:inset -3px 0 0 var(--p)}
+.av{width:56px;height:56px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-size:1.5rem;overflow:hidden;flex:none}
+.av img{width:100%;height:100%;object-fit:cover}.av.s{width:36px;height:36px;font-size:1rem}.av.l{width:104px;height:104px;font-size:2.6rem}
+.dn{width:140px;height:140px;border-radius:50%;display:grid;place-items:center;flex:none}
+.dn span{width:94px;height:94px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-weight:800;text-align:center;line-height:1.2}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%}
+.bar u{position:absolute;top:0;bottom:0;width:3px;background:var(--ink)}
+.cols{display:flex;gap:8px;height:150px;align-items:stretch}
+.cols>div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;text-align:center;gap:3px}
+.cols small{font-size:.72rem;color:var(--mute)}.cols i{display:block;border-radius:8px 8px 0 0;background:linear-gradient(var(--p),#2563eb)}
+details.ex{margin-top:6px}summary{cursor:pointer;color:var(--p2);font-size:.85rem}
+@media (min-width:900px){#sb{transform:none}.top,#bd{display:none!important}body.in #app{margin-inline-start:260px}#app{padding:28px 32px}}
+@media (max-height:780px){.mi{padding:7px 12px}#sb{gap:2px;padding-top:calc(10px + env(safe-area-inset-top,0px))}}
+.top .logo{white-space:nowrap;font-size:1.05rem}
+.thf{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));inset-inline-end:12px;z-index:40;padding:6px 12px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const $=s=>document.querySelector(s),app=$('#app');
+const ld=()=>{try{return JSON.parse(localStorage.getItem('ep'))||{}}catch(e){return{}}};
+let S=ld(),view='home',step=0,A={aud:[]},err='',msg='';
+const sv=()=>{try{localStorage.setItem('ep',JSON.stringify(S))}catch(e){}};
+if(S.ans&&!S.ans.P)S.ans=null;
+const CURS={SAR:['ريال','ر.س','السعودية'],AED:['درهم','د.إ','الإمارات'],KWD:['دينار','د.ك','الكويت'],QAR:['ريال','ر.ق','قطر'],BHD:['دينار','د.ب','البحرين'],OMR:['ريال','ر.ع','عُمان'],JOD:['دينار','د.أ','الأردن'],EGP:['جنيه','ج.م','مصر']};
+const curOpts=v=>Object.keys(CURS).map(k=>`<option value="${k}" ${v==k?'selected':''}>${CURS[k][2]} (${k})</option>`).join('');
+const trialLeft=()=>Math.ceil((S.trial+14*864e5-Date.now())/864e5);
+const tt=()=>{const e=$('#terms');e.hidden=!e.hidden};
+const dk=()=>(S.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'))==='dark';
+const tgt=()=>{S.theme=dk()?'light':'dark';sv();render()};
+const esc=t=>String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const f=n=>Math.round(n).toLocaleString('en'),LIM={basic:2,growth:5},PL={basic:'الأساسية',growth:'النمو'};
+const sb=o=>document.body.classList.toggle('sbo',!!o);
+const go=v=>{view=v;err='';msg='';sb(0);render()};
+const av=c=>`<div class="av ${c||''}">${S.prof&&S.prof.photo?`<img src="${S.prof.photo}" alt="">`:'👤'}</div>`,nm=()=>esc((S.prof&&S.prof.name)||'');
+const logo='<div class="logo">إيزي <b>بروجكت</b></div>';
+
+function auth(){return `<div class="ctr" style="padding-top:8vh">${logo}<h1>أهلاً بك 👋</h1><p class="mute">اعرف ربحك الحقيقي لكل طلب ومنتج في متجرك.</p>
+<div class="card"><label>البريد الإلكتروني</label><input id="em" type="email" dir="ltr" autocomplete="email">
+<label>كلمة المرور (6 أحرف على الأقل)</label><input id="pw" type="password" dir="ltr">
+<label style="font-weight:400;display:flex;gap:8px;margin-top:14px;align-items:center"><input id="ok" type="checkbox" style="width:auto"><span>أوافق على الشروط وإخلاء المسؤولية: التحليلات استرشادية وليست نصيحة مالية.</span></label><button class="ghost" style="margin-top:8px;padding:6px 12px" onclick="tt()">عرض الشروط الكاملة</button><div id="terms" class="mute" hidden style="margin-top:8px"><p>1. الموقع أداة تنظيم؛ التحليلات والتنبيهات استرشادية وتعليمية فقط.</p><p>2. لا يقدّم الموقع استشارات مالية أو استثمارية أو ضريبية.</p><p>3. دقة المخرجات تعتمد على بياناتك، ومراجعتها مسؤوليتك.</p><p>4. رسوم الاشتراك غير قابلة للاسترداد بعد التفعيل.</p><p>5. لا يتحمل الموقع مسؤولية خسائر أو قرارات أو انقطاع أو فقد بيانات خارج النطاق المعتاد.</p><p>6. التسجيل موافقة صريحة على هذه البنود.</p></div>
+<p class="err">${err}</p><button class="full" onclick="reg()">إنشاء حساب / دخول</button>
+<p class="mute" style="margin-top:10px">نسخة تجريبية: بياناتك تُحفظ على جهازك فقط ولا تُرسل لأي خادم.</p></div></div>`}
+function reg(){const e=$('#em').value.trim(),p=$('#pw').value;
+if(!/^\S+@\S+\.\S+$/.test(e)||p.length<6)err='أدخل بريداً صحيحاً وكلمة مرور من 6 أحرف.';
+else if(!$('#ok').checked)err='يجب الموافقة على إخلاء المسؤولية للمتابعة.';
+else{S.user={email:e};S.plan=S.plan||'growth';S.trial=S.trial||Date.now();S.projects=S.projects||[];S.rm=S.rm||[];sv();err=''}render()}
+
+const Q=[{t:'ما اسم متجرك أو نوع منتجاته؟',h:'مثال: متجر عطور، ملابس جاهزة، مستحضرات تجميل',b:()=>`<input id="q0" value="${esc(A.type||'')}"><label>عملة متجرك</label><select id="q0c">${curOpts(A.cur)}</select><p class="mute">أسعار الباقات بالدولار كمرجع عربي موحد، وأرقام متجرك تُحسب بعملته.</p>`,g:()=>{A.cur=$('#q0c').value;A.type=$('#q0').value.trim();return A.type?'':'اكتب نوع النشاط.'}},
+{t:'سعر المنتج وتكاليفه (بالريال)',h:'متوسط منتجات متجرك',b:()=>`<label>متوسط سعر البيع</label><input id="a1" type="number" min="0" value="${A.P||''}"><label>متوسط تكلفة الشراء</label><input id="a2" type="number" min="0" value="${A.C??''}"><label>متوسط الشحن للطلب</label><input id="a3" type="number" min="0" value="${A.H??''}"><label>عمولة الدفع %</label><input id="a4" type="number" min="0" max="100" step="0.1" value="${A.F??''}">`,g:()=>{A.P=+$('#a1').value;A.C=+$('#a2').value;A.H=+$('#a3').value;A.F=+$('#a4').value;return A.P>0&&['#a2','#a3','#a4'].every(i=>$(i).value!=='')&&A.F<=100&&A.C>=0&&A.H>=0&&A.F>=0?'':'أدخل كل الأرقام (سعر البيع أكبر من صفر، والعمولة بين 0 و100).'}},
+{t:'الإعلانات والطلبات (شهرياً)',h:'أرقام آخر شهر تقريباً',b:()=>`<label>إجمالي الإعلانات (ر.س)</label><input id="a5" type="number" min="0" value="${A.D??''}"><label>عدد الطلبات</label><input id="a6" type="number" min="0" value="${A.N||''}"><label>عدد المرتجعات</label><input id="a7" type="number" min="0" value="${A.R??''}">`,g:()=>{A.D=+$('#a5').value;A.N=+$('#a6').value;A.R=+$('#a7').value;return A.N>0&&A.D>=0&&A.R>=0&&A.R<=A.N&&$('#a5').value!==''&&$('#a7').value!==''?'':'أدخل الإعلانات وعدد الطلبات (أكبر من صفر) والمرتجعات (لا تزيد عن الطلبات).'}},
+{t:'من جمهورك المستهدف؟',h:'يمكنك اختيار أكثر من خيار',b:()=>`<div class="chips">${['النساء','الرجال','الشباب','المراهقون','الأطفال وأولياء الأمور'].map(x=>`<span class="chip ${A.aud.includes(x)?'on':''}" onclick="tg('${x}')">${x}</span>`).join('')}</div>`,g:()=>A.aud.length?'':'اختر جمهوراً واحداً على الأقل.'},
+{t:'ما أهدافك الاستراتيجية؟',h:'يمكنك اختيار أكثر من هدف',b:()=>`<div class="chips">${['زيادة المبيعات اليومية','تقليل التكاليف والهدر','التوسع الجغرافي','تحسين الحملات الإعلانية'].map(x=>`<span class="chip ${(A.goals||[]).includes(x)?'on':''}" onclick="tg2('${x}')">${x}</span>`).join('')}</div>`,g:()=>(A.goals||[]).length?'':'اختر هدفاً واحداً على الأقل.'},
+{t:'ما أكبر عائق يواجهك؟',h:'مثال: ضعف عدد زوار المتجر، مشاكل الشحن',b:()=>`<textarea id="q4" rows="3">${esc(A.ob||'')}</textarea>`,g:()=>{A.ob=$('#q4').value.trim();return A.ob?'':'اكتب العائق.'}}];
+const tg=x=>{const i=A.aud.indexOf(x);i<0?A.aud.push(x):A.aud.splice(i,1);render()};
+const tg2=x=>{A.goals=A.goals||[];const i=A.goals.indexOf(x);i<0?A.goals.push(x):A.goals.splice(i,1);render()};
+function quiz(){const q=Q[step];return `<div class="ctr" style="padding-top:6vh">${logo}<p class="mute">السؤال ${step+1} من ${Q.length}</p><div class="bar"><i style="width:${(step+1)/Q.length*100}%"></i></div>
+<div class="card"><h2>${q.t}</h2><p class="mute">${q.h}</p>${q.b()}<p class="err">${err}</p>
+<div class="row" style="margin-top:14px">${step?'<button class="ghost" onclick="nx(-1)">السابق</button>':'<span></span>'}<button onclick="nx(1)">${step==Q.length-1?'إنشاء لوحة التحكم':'التالي'}</button></div></div></div>`}
+function nx(d){if(d>0){const e=Q[step].g();if(e){err=e;return render()}if(step==Q.length-1){S.ans=A;{const x=m();(S.hist=S.hist||[]).push({d:Date.now(),net:x.net,no:x.no,mg:x.mg})}sv();view='home';return render()}}step+=d;err='';render()}
+
+const m=()=>{const a=S.ans,fee=a.P*a.F/100,rr=a.R/a.N,ret=rr*(a.H+fee);a.rev=a.P*a.N;a.cost=a.N*(a.C+a.H+fee+ret);a.ads=a.D;const net=a.rev-a.cost-a.ads;return{net,mg:net/a.rev*100,ad:a.ads/a.rev*100,no:net/a.N,pre:a.P-a.C-a.H-fee,adp:a.D/a.N,rr:rr*100}};
+const pm=p=>{const a=S.ans,fee=p.p*a.F/100,ad=p.a!=null?p.a:a.D/a.N,rr=p.r!=null?p.r/100:a.R/a.N,net=p.p-(p.c+a.H+fee+ad+rr*(a.H+fee));return{net,mg:net/p.p*100}};
+function alerts(){const a=S.ans,x=m(),t=a.thr||{m:15,r:10},r=[],pr=S.prods||[],w=pr.filter(q=>pm(q).mg<t.m);
+if(x.adp>x.pre)r.push(['bad','💸','الإعلان للطلب ('+f(x.adp)+' ر.س) أعلى من ربحك قبل الإعلان ('+f(x.pre)+' ر.س)','كل طلب يجلبه الإعلان يخسرك. من الخيارات للمراجعة: السعر، الشحن، استهداف الحملة.']);
+if(x.rr>t.r)r.push(['bad','↩️','المرتجعات '+x.rr.toFixed(0)+'% (الحد '+t.r+'%)','ارتفاع المرتجعات يأكل الشحن والعمولة. افحص سبب الإرجاع في أكثر المنتجات رجوعاً.']);
+if(w.length)r.push(['bad','📉','هامش منخفض: '+w.map(q=>esc(q.n)).join('، '),'صافي هامشها أقل من '+t.m+'% بعد الشحن والعمولة والإعلان. من الخيارات للمراجعة: السعر، الشحن، الإعلان.']);
+else if(!pr.length&&x.mg<t.m)r.push(['bad','📉','هامش متجرك '+x.mg.toFixed(0)+'% (الحد '+t.m+'%)','هامش الصافي منخفض بعد كل التكاليف. من الخيارات للمراجعة: التسعير والشحن والإعلان.']);
+(S.camps||[]).forEach(k=>{const q=cs(k);if(q.ok)r.push(['ok','🎉','حملة «'+esc(k.n)+'» حققت هدفها',q.t])});
+if(!r.length)r.push(['ok','✅','لا تنبيهات الآن','أرقامك ضمن الحدود التي حددتها.']);
+return S.plan=='growth'?r:r.slice(0,1)}
+const alertCard=()=>`<div class="card"><h2>🔔 التنبيهات</h2>${alerts().map(a=>`<div class="ai" style="border-color:var(--${a[0]=='ok'?'ok':'bad'});margin:8px 0"><b>${a[1]} ${a[2]}</b>${a[1]=='🎉'?`<p class="mute">${a[3]}</p>`:ex(a[3])}</div>`).join('')}<p class="mute">تظهر عند تحديث أرقامك. الحدود قابلة للتعديل من حسابي.</p></div>`;
+const prodCard=()=>{const pr=S.prods||[];if(S.plan!='growth')return `<div class="card lock"><h2>🏷️ تصنيف المنتجات</h2><p>🔒 ضمن باقة النمو</p><button class="full" onclick="go('plans')">عرض الباقات</button></div>`;
+return `<div class="card"><h2>🏷️ تصنيف المنتجات</h2>${pr.map(q=>{const y=pm(q),ok=y.mg>=(S.ans.thr||{m:15}).m;return `<div class="row" style="margin:6px 0"><span>${ok?'🟢 رابح ومستقر':'🔴 وهم ربح'} · ${esc(q.n)}</span><b dir="ltr">${f(y.net)} ر.س (${y.mg.toFixed(0)}%)</b></div>`}).join('')||'<p class="mute">أضف منتجاتك من قسم المنتجات.</p>'}${ex('الرقم هو صافي ربح الطلب بعد تكلفة المنتج والشحن والعمولة وحصة الإعلان وأثر المرتجعات. الأخضر: الهامش عند الحد أو فوقه. الأحمر: تحته، أي أن الربح على الورق يتآكل. افتراض الحساب: المنتج المرتجع يعود للمخزون، وخسارته الشحن وعمولة الدفع.')}</div>`};
+const cs=k=>{const x=m(),cpa=k.o>0?k.s/k.o:null,pr=k.o*x.pre-k.s;return{ok:cpa!=null&&cpa<=k.g,t:`الإنفاق ${f(k.s)} · الطلبات ${f(k.o)} · تكلفة الطلب ${cpa!=null?f(cpa):'—'} (الهدف ${f(k.g)}) · ربح تقديري ${f(pr)} ر.س`}};
+function campaigns(){const c=S.camps||(S.camps=[]);
+if(S.plan!='growth')return `<h1>الحملات</h1><div class="card lock"><h2>🔒 ضمن باقة النمو</h2><button class="full" onclick="go('plans')">عرض الباقات</button></div>`;
+return `<h1>الحملات</h1><p class="mute">${c.length} من 5 حملات. أدخل نتائج حملتك ليهنئك النظام عند تحقيقها هدفها.</p><div class="card"><label>اسم الحملة</label><input id="cn"><label>الإنفاق (ر.س)</label><input id="cs" type="number" min="0"><label>عدد الطلبات من الحملة</label><input id="co" type="number" min="0"><label>الهدف: أقصى تكلفة للطلب (ر.س)</label><input id="cg" type="number" min="0"><p class="err">${err}</p><button class="full" onclick="addc()">إضافة حملة</button></div>${c.map((k,i)=>`<div class="card"><div class="row"><b>${cs(k).ok?'🎉':'⏳'} ${esc(k.n)}</b><button class="ghost" onclick="S.camps.splice(${i},1);sv();render()">حذف</button></div><p class="mute">${cs(k).t}</p><p class="mute">الربح التقديري = الطلبات × ربح الطلب قبل الإعلان − الإنفاق.</p></div>`).join('')}`}
+function addc(){const n=$('#cn').value.trim(),s=+$('#cs').value,o=+$('#co').value,g=+$('#cg').value;if(!n||$('#cs').value===''||$('#co').value===''||!(g>0)||s<0||o<0)err='أدخل الاسم والإنفاق والطلبات وهدف تكلفة الطلب (أكبر من صفر).';else if(S.camps.length>=5)err='الحد 5 حملات في هذه النسخة.';else{S.camps.push({n,s,o,g});sv();err=''}render()}
+function products(){const pr=S.prods||(S.prods=[]);
+if(S.plan!='growth')return `<h1>المنتجات</h1><div class="card lock"><h2>🔒 ضمن باقة النمو</h2><button class="full" onclick="go('plans')">عرض الباقات</button></div>`;
+return `<h1>المنتجات</h1><p class="mute">${pr.length} من 5 منتجات</p><div class="card"><label>اسم المنتج</label><input id="pnm"><label>سعر البيع (ر.س)</label><input id="ppr" type="number" min="0"><label>تكلفة الشراء (ر.س)</label><input id="pcs" type="number" min="0"><label>إعلان لكل طلب لهذا المنتج (ر.س) — اختياري</label><input id="ppa" type="number" min="0" placeholder="فارغ = متوسط المتجر، و0 = بيع عضوي"><label>نسبة مرتجعات المنتج % — اختياري</label><input id="ppt" type="number" min="0" max="100" placeholder="فارغ = متوسط المتجر"><p class="err">${err}</p><button class="full" onclick="addprod()">إضافة</button></div>${pr.map((q,i)=>`<div class="card row"><span>🏷️ ${esc(q.n)}<br><span class="mute">بيع ${f(q.p)} · شراء ${f(q.c)}${q.a!=null?' · إعلان '+f(q.a):''}${q.r!=null?' · مرتجعات '+q.r+'%':''}</span></span><button class="ghost" onclick="S.prods.splice(${i},1);sv();render()">حذف</button></div>`).join('')}`}
+function addprod(){const n=$('#pnm').value.trim(),q=+$('#ppr').value,c=+$('#pcs').value;if(!n||!(q>0)||$('#pcs').value===''||c<0)err='أدخل الاسم وسعر بيع أكبر من صفر وتكلفة الشراء.';else if(S.prods.length>=5)err='الحد 5 منتجات في هذه النسخة.';else{S.prods.push({n,p:q,c,a:$('#ppa').value===''?null:+$('#ppa').value,r:$('#ppt').value===''?null:+$('#ppt').value});sv();err=''}render()}
+const rate=(k,v)=>{S.fb=S.fb||{};S.fb[k]=v;sv();render()};
+const fbtxt=()=>{const r=S.fb||{};return `تقييم إيزي بروجكت\nوضوح الأرقام: ${r.clr||'-'}/5\nفائدة التنبيهات: ${r.use||'-'}/5\nالاستعداد للدفع: ${r.pay||'-'}/5\nملاحظات: ${r.c||'-'}`};
+function fb(){const r=S.fb||{};return `<h1>رأيك يهمنا 💬</h1><p class="mute">أنت تجرّب نسخة أولية. ساعدنا بتقييم سريع (1 ضعيف، 5 ممتاز).</p><div class="card">${[['clr','هل الأرقام واضحة؟'],['use','هل التنبيهات مفيدة؟'],['pay','هل تدفع مقابل هذه الأداة؟']].map(q=>`<label>${q[1]}</label><div class="chips">${[1,2,3,4,5].map(v=>`<span class="chip ${r[q[0]]==v?'on':''}" onclick="rate('${q[0]}','${v}')">${v}</span>`).join('')}</div>`).join('')}
+<label>ما الذي أربكك أو ينقصك؟</label><textarea rows="3" onchange="rate('c',this.value)">${esc(r.c||'')}</textarea>
+<a href="https://wa.me/?text=${encodeURIComponent(fbtxt())}" target="_blank" rel="noopener" style="display:block;text-align:center;background:var(--p);color:var(--on);border-radius:12px;padding:12px;margin-top:14px;font-weight:700;text-decoration:none">إرسال التقييم عبر واتساب</a><p class="mute">يُفتح واتساب لتختار الجهة التي ترسل لها.</p></div>`}
+function advice(){const a=S.ans,x=m(),gs=a.goals||(a.goal?[a.goal]:[]);
+const L={'زيادة المبيعات اليومية':['عرض واحد لأكثر منتج طلباً','ركّز هذا الأسبوع على عرض واحد لأكثر منتجاتك طلباً وقِس مبيعاته يومياً.'],'تقليل التكاليف والهدر':['قلّص أكبر بند غير ضروري','اكتب كل المصاريف الشهرية وصنّفها، ثم احذف أو قلّص أكبر بند غير ضروري.'],'التوسع الجغرافي':['جرّب مدينة جديدة بميزانية صغيرة','جرّب مدينة واحدة جديدة بميزانية صغيرة قبل التوسع الكامل.'],'تحسين الحملات الإعلانية':['قارن تكلفة العميل لكل جمهور','قسّم الحملات حسب الجمهور وقارن تكلفة اكتساب العميل لكل جمهور.']};
+const g=gs.map(k=>L[k]||['','']);
+return [{i:x.net<0?'🔴':'💰',s:x.net<0?`خسارة ${f(-x.net)} ر.س`:`ربح ${f(x.net)} ر.س · هامش ${x.mg.toFixed(0)}%`,l:x.net<0?`أنت تخسر ${f(-x.net)} ريال شهرياً: راجع أعلى بند تكلفة قبل أي توسع.`:`هامش ربحك ${x.mg.toFixed(1)}%، ${x.mg<15?'وهو ضعيف: ابحث عن خفض التكاليف أو رفع الأسعار.':'وهو جيد: حافظ عليه أثناء النمو.'}`},
+{i:'📣',s:`الإعلانات ${x.ad.toFixed(0)}% من الإيراد`,l:x.ad>20?'الإعلانات تأكل جزءاً كبيراً من إيراداتك: أوقف الحملات الأقل عائداً وركّز الميزانية على الأفضل.':'نسبة إعلاناتك معقولة؛ جرّب رفعها تدريجياً على الحملة الأفضل وراقب الأثر.'},
+{i:'🎯',s:'خطوتك هذا الأسبوع: '+g.map(k=>k[0]).join(' + '),l:`لأهدافك (${gs.join('، ')}): ${g.map(k=>k[1]).join(' ')} وعائقك المذكور (${esc(a.ob)}) يستحق خطوة محددة له هذا الأسبوع.`}]}
+
+function home(){const a=S.ans,x=m(),mx=Math.max(a.rev,a.cost+a.ads,1),L=LIM[S.plan],n=S.projects.length;
+const st=x.net<0?['🔴','تحتاج تدخّلاً عاجلاً']:x.mg<15?['⚠️','هامشك ضعيف، حسّنه']:['🚀','أداء ممتاز، واصل'],mg=Math.max(0,Math.min(100,x.mg));
+const b=(l,v,c)=>`<div class="row"><span>${l}</span><b dir="ltr">${f(v)}</b></div><div class="bar gb"><i style="--w:${Math.max(0,v)/mx*100}%;${c?'background:'+c:''}"></i></div>`;
+const k=(i,l,v,c,d)=>`<div class="k" style="border-top:4px solid ${c};animation:up .5s ${d}s both"><span><span class="em">${i}</span> ${l}</span><b>${v}</b></div>`;
+return `<div class="hero"><div class="row"><div><p style="opacity:.85;margin:0">أهلاً ${nm()||'بك'} 👋 · ${esc(a.type)}</p><p style="margin:6px 0 0;font-size:.9rem">صافي ربحك الشهري</p><div class="big"><span data-n="${x.net}">0</span> <small style="font-size:1rem">ر.س</small></div></div><div class="ring" style="--v:${mg}"><span>${x.mg.toFixed(0)}%</span></div></div><div class="pill">${st[0]} ${st[1]}</div></div>
+<div class="chips" style="margin:12px 0"><span class="chip" onclick="go('projects')">➕ مشروع جديد</span><span class="chip" onclick="go('analysis')">🧠 التحليل</span><span class="chip" onclick="go('plans')">💳 الباقات</span></div>
+<div class="grid">${k('💰','الإيرادات',f(a.rev),'#12805c',0)}${k('🧾','التكاليف',f(a.cost),'#e08a00',.08)}${k('📣','الإعلانات',f(a.ads),'#c0392b',.16)}${k('🛒','ربح الطلب',f(x.no)+' ر.س','#2563eb',.24)}</div>
+<div class="card"><h2>📊 الإيراد مقابل المصاريف</h2>${b('الإيرادات',a.rev)}${b('التكاليف',a.cost,'var(--mute)')}${b('الإعلانات',a.ads,'var(--bad)')}</div>
+${alertCard()}<div class="ai tip"><b>💡 نصيحة اليوم</b><p>${advice()[Math.floor(Date.now()/864e5)%3].l}</p><button class="ghost" onclick="go('analysis')">اعرض التحليل كاملاً</button></div>
+<button class="ghost full" onclick="A={aud:[],cur:S.ans.cur,thr:S.ans.thr};S.ans=null;step=0;sv();render()">تحديث أرقامي</button>`}
+
+function projects(){const L=LIM[S.plan],n=S.projects.length;
+return `<h1>المشاريع</h1><p class="mute">${n} من ${L} مشاريع (باقة ${PL[S.plan]})</p>
+<div class="card"><label>اسم مشروع جديد</label><input id="pn"><p class="err">${err}</p><button class="full" onclick="addp()">إضافة</button>
+${n>=L&&S.plan=='basic'?'<p class="mute" style="margin-top:8px">وصلت للحد. باقة النمو تتيح 5 مشاريع.</p>':''}</div>
+${S.projects.map((p,i)=>`<div class="card row"><span>📁 ${esc(p)}</span><button class="ghost" onclick="S.projects.splice(${i},1);sv();render()">حذف</button></div>`).join('')||'<p class="mute">لا توجد مشاريع بعد.</p>'}`}
+function addp(){const v=$('#pn').value.trim();if(!v)err='اكتب اسم المشروع.';else if(S.projects.length>=LIM[S.plan])err='وصلت لحد باقتك. رقّ باقتك لإضافة المزيد.';else{S.projects.push(v);sv();err=''}render()}
+
+const hb=(l,v,mx,c)=>`<div class="row"><span>${l}</span><b dir="ltr">${f(v)}</b></div><div class="bar gb"><i style="--w:${Math.min(Math.max(0,v)/mx*100,100)}%;${c?'background:'+c:''}"></i></div>`;
+const ex=t=>`<details class="ex"><summary>؟ اشرح لي</summary><p class="mute">${t}</p></details>`;
+const bu=(l,v,t,mx,good)=>`<div class="row"><span>${l}</span><b dir="ltr">${v.toFixed(0)}%</b></div><div class="bar" style="position:relative"><i style="width:${Math.max(0,Math.min(v,mx))/mx*100}%;background:var(--${good?'ok':'bad'})"></i><u style="inset-inline-start:${t/mx*100}%"></u></div>`;
+const histCard=()=>{const H=S.hist||[],w=S.hp!='m',key=d=>w?Math.floor(d/6048e5):new Date(d).toISOString().slice(0,7),g=new Map();H.forEach(h=>g.set(key(h.d),h));const L=[...g.values()].slice(-6),mx=Math.max(...L.map(h=>Math.abs(h.net)),1),lab=h=>new Date(h.d).toLocaleDateString('ar',{day:'numeric',month:'short'}),dl=L.length>1?L[L.length-1].net-L[0].net:0;
+return `<div class="card"><h2>📅 تطور الربحية</h2><div class="chips"><span class="chip ${w?'on':''}" onclick="S.hp='w';sv();render()">أسبوعي</span><span class="chip ${w?'':'on'}" onclick="S.hp='m';sv();render()">شهري</span></div>${L.length>1?`<div class="cols" style="margin-top:12px">${L.map(h=>`<div><small dir="ltr">${f(h.net)}</small><i style="height:${Math.max(Math.abs(h.net)/mx*70,3)}%;${h.net<0?'background:var(--bad)':''}"></i><small>${lab(h)}</small></div>`).join('')}</div><p style="margin-top:8px">${dl>=0?'📈 تحسّن':'📉 تراجع'} صافي الربح الشهري: <b dir="ltr">${f(dl)}</b> ر.س منذ أول قياس.</p>`:'<p class="mute" style="margin-top:10px">هذا أول قياس. حدّث أرقامك لاحقاً من الرئيسية لترى تطورك.</p>'}${ex('كل مرة تحدّث فيها أرقامك يُحفظ قياس جديد. نعرض آخر قياس في كل أسبوع أو شهر، ونقارن صافي ربحك الشهري بأول قياس. تُحفظ البيانات في متصفحك فقط.')}</div>`};
+const bk=()=>btoa(unescape(encodeURIComponent(JSON.stringify(Object.assign({},S,{prof:Object.assign({},S.prof,{photo:''})})))));
+function rest(){try{const o=JSON.parse(decodeURIComponent(escape(atob($('#bk').value.trim()))));if(!o.user||!o.ans||!o.ans.P)throw 0;S=o;sv();msg='✔ تمت الاستعادة';}catch(e){msg='النص غير صالح.'}render()}
+function analysis(){const a=S.ans,x=m(),ad=advice();
+const vals=[['التكاليف',a.cost,'#e08a00'],['الإعلانات',a.ads,'#c0392b'],['الصافي',Math.max(x.net,0),'#12805c']],tot=vals.reduce((q,v)=>q+v[1],0)||1;let ac=0;
+const grad=vals.map(v=>{const q=ac/tot*100;ac+=v[1];return `${v[2]} ${q}% ${ac/tot*100}%`}).join(',');
+let h=`<h1>التحليل</h1>
+<div class="card"><h2>📊 أين يذهب إيرادك؟</h2><div class="row" style="justify-content:space-around;flex-wrap:wrap;gap:14px"><div class="dn" style="background:conic-gradient(${grad})"><span>${x.mg.toFixed(0)}%<small class="mute">هامش</small></span></div><div>${vals.map(v=>`<div><span class="dot" style="background:${v[2]}"></span> ${v[0]} <b>${(v[1]/tot*100).toFixed(0)}%</b></div>`).join('')}</div></div>${ex('الحلقة تقسّم مصاريفك وربحك. كلما كبرت القطعة الخضراء فربحك أعلى. وإذا لم تظهر خضراء فمصاريفك تتجاوز إيرادك.')}</div>
+<div class="card"><h2>🩺 مؤشرات الصحة</h2>${bu('هامش الربح',x.mg,15,40,x.mg>=15)}${bu('الإعلانات من الإيراد',x.ad,20,50,x.ad<=20)}${ex('الخط الأسود هو الحد المقترح: ألا يقل هامش الربح عن 15%، وألا تزيد الإعلانات عن 20% من الإيراد. الأخضر يعني أنك ضمن الحد، والأحمر أنك خارجه.')}</div>
+${prodCard()}${histCard()}<div class="card"><h2>🎯 خطواتك</h2>${ad.map(t=>`<div class="ai" style="margin:8px 0"><b>${t.i} ${t.s}</b>${ex(t.l)}</div>`).join('')}</div>`;
+if(S.plan!='growth')return h+`<div class="card lock"><h2>🔒 ميزات باقة النمو</h2><p>📈 توقع المبيعات · 🧾 تقرير ضريبي · 🗺️ خارطة طريق</p><button class="full" onclick="go('plans')">عرض الباقات</button></div>`;
+const g=S.g??5,v=[0,1,2,3].map(i=>a.rev*Math.pow(1+g/100,i)),mv=Math.max(...v,1),dn=S.rm.filter(r=>r.d).length,tt=S.rm.length;
+h+=`<div class="card"><h2>📈 توقع المبيعات</h2><div class="cols">${v.map((y,i)=>`<div><small dir="ltr">${f(y)}</small><i style="height:${Math.max(y/mv*70,3)}%"></i><small>${i?'+'+i+' شهر':'الآن'}</small></div>`).join('')}</div><label>نمو شهري متوقع %</label><input type="number" value="${g}" min="-50" max="100" onchange="S.g=+this.value;sv();render()">${ex('توقع حسابي بسيط: يتضاعف إيرادك الحالي شهرياً بنسبة النمو التي تحددها أنت. هو تقدير وليس ضماناً.')}</div>
+<div class="card"><h2>🧾 تقرير ضريبي أولي</h2>${hb('الإيرادات',a.rev,a.rev,'#12805c')}${hb('التكاليف والإعلانات',a.cost+a.ads,a.rev,'#e08a00')}${hb('الصافي',x.net,a.rev)}${hb('ضريبة القيمة المضافة 15% (تقدير)',a.rev*.15,a.rev,'var(--bad)')}${ex('لتنظيم دفاترك فقط وليس إقراراً ضريبياً. الرقم الأخير تقدير بافتراض 15% من الإيرادات، فراجع محاسباً قانونياً قبل الاعتماد عليه.')}</div>
+<div class="card"><h2>🗺️ خارطة الطريق</h2>${tt?`<div class="bar"><i style="width:${dn/tt*100}%"></i></div>`:''}${S.rm.map((r,i)=>`<div class="row"><span>${r.d?'✅':'⬜'} ${esc(r.t)} <span class="mute">(${esc(r.m)})</span></span><span><button class="ghost" onclick="S.rm[${i}].d=!S.rm[${i}].d;sv();render()">تم</button> <button class="ghost" onclick="S.rm.splice(${i},1);sv();render()">✕</button></span></div>`).join('')||'<p class="mute">أضف أول هدف.</p>'}
+<label>هدف جديد</label><input id="rt"><label>الموعد</label><input id="rmo" placeholder="مثال: ديسمبر 2026"><button class="full" onclick="addr()">إضافة هدف</button></div>`;return h}
+function account(){const p=S.prof||{};
+return `<h1>حسابي</h1><div class="card"><div style="display:flex;justify-content:center">${av('l')}</div>
+<input type="file" id="ph" accept="image/*" hidden onchange="pic(this)">
+<div class="row" style="justify-content:center;margin-top:12px"><button class="ghost" onclick="$('#ph').click()">📷 ${p.photo?'تغيير الصورة':'إضافة صورة'}</button>${p.photo?`<button class="ghost" onclick="S.prof.photo='';sv();render()">حذف</button>`:''}</div>
+<p class="mute" style="text-align:center">الصورة تُحفظ على جهازك فقط.</p>
+<label>الاسم</label><input id="an" maxlength="40" value="${esc(p.name||'')}">
+<label>البريد الإلكتروني</label><input value="${esc(S.user.email)}" dir="ltr" disabled>
+<label>نوع النشاط</label><input id="at" value="${esc(S.ans.type)}">
+<label>عملة المتجر</label><select id="acur">${curOpts(S.ans.cur||'SAR')}</select><label>حد هامش الربح للتنبيه (%)</label><input id="th1" type="number" min="0" value="${(S.ans.thr||{m:15}).m}"><label>حد المرتجعات للتنبيه (%)</label><input id="th2" type="number" min="0" value="${(S.ans.thr||{r:10}).r}"><p style="color:var(--ok)">${msg}</p><button class="full" onclick="saveAcc()">حفظ التغييرات</button></div><div class="card"><h2>💾 نسخة احتياطية</h2><p class="mute">بياناتك في متصفحك فقط. انسخ النص واحتفظ به، وألصقه هنا لاستعادتها.</p><textarea id="bk" rows="3" onfocus="this.select()">${bk()}</textarea><button class="ghost full" onclick="rest()">استعادة من النص</button></div>`}
+function saveAcc(){const t=$('#at').value.trim();S.prof=Object.assign(S.prof||{},{name:$('#an').value.trim().slice(0,40)});if(t)S.ans.type=t;S.ans.thr={m:+$('#th1').value||15,r:+$('#th2').value||10};S.ans.cur=$('#acur').value;sv();msg='✔ تم حفظ التغييرات';render()}
+function pic(i){const fl=i.files[0];if(!fl)return;if(!fl.type.startsWith('image/')){msg='اختر ملف صورة.';return render()}
+const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas'),z=160,q=Math.min(im.width,im.height);c.width=c.height=z;c.getContext('2d').drawImage(im,(im.width-q)/2,(im.height-q)/2,q,q,0,0,z,z);S.prof=S.prof||{};S.prof.photo=c.toDataURL('image/jpeg',.8);sv();msg='✔ تم تحديث الصورة';render()};im.onerror=()=>{msg='تعذر قراءة الصورة.';render()};im.src=r.result};r.readAsDataURL(fl)}
+function addr(){const t=$('#rt').value.trim();if(t){S.rm.push({t,m:$('#rmo').value.trim()||'غير محدد',d:false});sv()}render()}
+
+function plans(){const P=(k,n,pr,per,l)=>`<div class="card pc ${S.plan==k?'cur':''}"><h2>${n}</h2><div class="price">${pr}<span class="mute" style="font-size:.9rem"> / ${per}</span></div><ul>${l.map(x=>`<li>${x}</li>`).join('')}</ul>${S.plan==k?'<span class="tag">باقتك الحالية</span>':`<button class="full" onclick="S.plan='${k}';S.paid=1;sv();render()">اشترك</button>`}</div>`;
+return `<h1>الباقات</h1>${S.plan=='growth'&&!S.paid?`<div class="card tip"><b>🎁 فترة تجريبية مجانية: تبقّى ${Math.max(trialLeft(),0)} يوم</b><p class="mute">بعدها تعود إلى الباقة الأساسية ما لم تشترك.</p></div>`:S.ended&&S.plan=='basic'?'<div class="card tip"><b>انتهت الفترة التجريبية</b><p class="mute">عدت إلى الباقة الأساسية.</p></div>':''}<div class="card"><table><tr><th></th><th>الأساسية</th><th>النمو</th></tr><tr><td>مشاريع / متاجر</td><td>2 / 1</td><td>5 / 2</td></tr><tr><td>التنبيهات</td><td>تنبيه واحد</td><td>الثلاثة + الإنجاز</td></tr><tr><td>تصنيف المنتجات والحملات</td><td>—</td><td>✓</td></tr><tr><td>توقع وتقارير وخارطة</td><td>—</td><td>✓</td></tr></table></div><p class="mute">الدفع غير مفعّل في النسخة التجريبية. أسعار الباقات بالدولار كمرجع عربي موحد.</p>
+${P('basic','الأساسية','9$','شهر',['مشروعان','متجر واحد','تحليل ذكي بسيط'])}
+${P('growth','النمو','25$','شهرين',['5 مشاريع','متجران','تحليل متقدم وتوقع الطلب والمبيعات','تقارير ضريبية أولية','خارطة طريق مجدولة'])}
+<div class="card pc"><h2>الاحترافية</h2><p class="mute">قريباً: مشاريع ومتاجر غير محدودة وميزات حصرية.</p>${S.wait?'<span class="tag">أنت في قائمة الانتظار</span>':'<button class="ghost full" onclick="S.wait=1;sv();render()">انضم لقائمة الانتظار</button>'}</div>
+<button class="ghost full" onclick="if(confirm('سيتم حذف بياناتك من هذا الجهاز. متأكد؟')){S={};sv();A={aud:[]};step=0;view='home';render()}">خروج وحذف بياناتي من الجهاز</button>`}
+
+function cu(){const rm=matchMedia('(prefers-reduced-motion:reduce)').matches;document.querySelectorAll('[data-n]').forEach(el=>{const n=+el.dataset.n,t0=performance.now();(function q(t){const p=rm?1:Math.min((t-t0)/1200,1);el.textContent=Math.round(n*(1-Math.pow(1-p,3))).toLocaleString('en');if(p<1)requestAnimationFrame(q)})(t0)})}
+function render(){let h;S.theme?document.documentElement.setAttribute('data-theme',S.theme):document.documentElement.removeAttribute('data-theme');if(S.ans&&S.user){if(!S.trial)S.trial=Date.now();if(S.plan=='growth'&&!S.paid&&trialLeft()<=0){S.plan='basic';S.ended=1;sv()}}
+if(!S.user)h=auth();else if(!S.ans)h=quiz();
+else{const tb=S.plan=='growth'&&!S.paid?`<span class="tag" style="background:#e08a00">🎁 تجربة مجانية · تبقّى ${Math.max(trialLeft(),0)} يوم</span>`:'';h={home,projects,products,campaigns,analysis,plans,account,fb}[view]();
+h=`<div class="top"><button class="ghost mb" onclick="sb(1)">☰</button>${logo}<span style="flex:1"></span>${tb}<button class="ghost mb" onclick="tgt()">${dk()?'☀️':'🌙'}</button>${av('s')}</div><aside id="sb">${logo}<div style="display:flex;gap:10px;align-items:center;padding:12px 0">${av()}<div><b>${nm()||'مرحباً'}</b><br>${tb||`<span class="tag">${PL[S.plan]}</span>`}</div></div>${[['home','🏠','الرئيسية'],['projects','📁','المشاريع'],['products','🏷️','المنتجات'],['campaigns','📣','الحملات'],['analysis','📊','التحليل'],['plans','💳','الباقات'],['fb','💬','رأيك'],['account','👤','حسابي']].map(x=>`<button class="mi ${view==x[0]?'on':''}" onclick="go('${x[0]}')">${x[1]} ${x[2]}</button>`).join('')}<span style="flex:1"></span><button class="mi" onclick="tgt()">${dk()?'☀️ النمط الفاتح':'🌙 النمط الداكن'}</button><button class="mi" onclick="S.user=null;sv();sb(0);render()">🚪 تسجيل الخروج</button></aside><div id="bd" onclick="sb(0)"></div>`+h}
+if(!(S.user&&S.ans))h=`<button class="ghost thf" onclick="tgt()">${dk()?'☀️':'🌙'}</button>`+h;
+if(S.ans&&S.ans.cur&&S.ans.cur!='SAR'){const c=CURS[S.ans.cur];h=h.split('ر.س').join(c[1]).split('ريال').join(c[0])}
+document.body.classList.toggle('in',!!(S.user&&S.ans));app.innerHTML=h;scrollTo(0,0);cu()}
+render();
+</script>
+</body>
+</html>
